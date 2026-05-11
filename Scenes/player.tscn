@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dgsr66k654gt"]
+
+[ext_resource type="Script" uid="uid://beixirl5v2ho" path="res://Scripts/Components/MovementComponent.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://ccb2gnq34myxh" path="res://Scripts/Components/InputComponent.gd" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://bulcbrnmg7u3l" path="res://Scripts/player.gd" id="1_vgqql"]
+[ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="2_fkybt"]
+[ext_resource type="PackedScene" uid="uid://xix3t6skxbag" path="res://Scenes/hammer.tscn" id="2_x3wgy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
+size = Vector2(124, 117)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fkybt"]
+size = Vector2(124, 117)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3smsa"]
+size = Vector2(202, 220.75)
+
+[node name="player" type="CharacterBody2D" unique_id=1932963563 node_paths=PackedStringArray("input_component", "movement_component", "hammer")]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_vgqql")
+input_component = NodePath("InputComponent")
+movement_component = NodePath("MovementComponent")
+hammer = NodePath("hammer")
+has_hammer_launch = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433801604]
+texture = ExtResource("2_fkybt")
+
+[node name="hammer" parent="." unique_id=914817786 instance=ExtResource("2_x3wgy")]
+position = Vector2(76, 0)
+THROW_DISTANCE = 300.0
+
+[node name="collision_box" type="CollisionShape2D" parent="." unique_id=563101156]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_x3wgy")
+
+[node name="InputComponent" type="Node" parent="." unique_id=189209458]
+script = ExtResource("1_v0iea")
+metadata/_custom_type_script = "uid://ccb2gnq34myxh"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=911971705 node_paths=PackedStringArray("body")]
+script = ExtResource("1_cvnsp")
+body = NodePath("..")
+SPEED = 500
+TOP_SPEED = 500
+JUMP_FORCE = 1000
+AIR_MOVEMENT_SLOWDOWN_DELTA = 30.0
+GROUND_FRICTION = 0.2
+HAMMER_PULL_SPEED_MULTIPLIER = 4
+metadata/_custom_type_script = "uid://beixirl5v2ho"
+
+[node name="hitbox" type="Area2D" parent="." unique_id=1661497894]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1725082661]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_fkybt")
+
+[node name="hammer_return" type="Area2D" parent="." unique_id=713393666]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hammer_return" unique_id=45753444]
+position = Vector2(39, 0)
+shape = SubResource("RectangleShape2D_3smsa")
+
+[node name="hammer_spot" type="Node2D" parent="." unique_id=368730613]
+position = Vector2(76, 0)
+
+[connection signal="body_entered" from="hammer_return" to="hammer" method="_on_hammer_return_body_entered"]
+[connection signal="body_exited" from="hammer_return" to="hammer" method="_on_hammer_return_body_exited"]

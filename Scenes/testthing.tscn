@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://wdl7j5j5tkp"]
+
+[ext_resource type="Script" uid="uid://d2awwbrs5c78v" path="res://Scripts/Junk/testthing.gd" id="1_ojbk1"]
+[ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="2_7ubew"]
+[ext_resource type="Script" uid="uid://dxbp3uwynmcbv" path="res://Scripts/Junk/testthing_2.gd" id="3_lh8m1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3fiq2"]
+size = Vector2(51, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sknlg"]
+size = Vector2(36, 34)
+
+[node name="Testthing" type="CharacterBody2D" unique_id=83625845]
+script = ExtResource("1_ojbk1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=621323647]
+scale = Vector2(0.42349923, 0.42349923)
+texture = ExtResource("2_7ubew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=546312004]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_3fiq2")
+
+[node name="testthing2" type="CharacterBody2D" parent="." unique_id=1274129412]
+position = Vector2(0, 52)
+script = ExtResource("3_lh8m1")
+
+[node name="Sprite2D" type="Sprite2D" parent="testthing2" unique_id=1449484578]
+scale = Vector2(0.2890625, 0.2890625)
+texture = ExtResource("2_7ubew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="testthing2" unique_id=1946741009]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_sknlg")

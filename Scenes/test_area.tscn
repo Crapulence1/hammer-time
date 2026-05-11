@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bmos0higgjhan"]
+
+[ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="1_kpu7f"]
+[ext_resource type="PackedScene" uid="uid://dgsr66k654gt" path="res://Scenes/player.tscn" id="2_3n873"]
+[ext_resource type="PackedScene" uid="uid://fh3xcm0atwrk" path="res://Scenes/upgrade_orb.tscn" id="3_3n873"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_15qo1"]
+size = Vector2(124.254425, 111.16681)
+
+[node name="testArea" type="Node2D" unique_id=1830321723]
+
+[node name="platform" type="StaticBody2D" parent="." unique_id=172327272]
+position = Vector2(1305, 854)
+scale = Vector2(20.326195, 0.8275849)
+
+[node name="Sprite2D" type="Sprite2D" parent="platform" unique_id=513249004]
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("1_kpu7f")
+
+[node name="platform" type="CollisionShape2D" parent="platform" unique_id=575034496]
+position = Vector2(-0.055030823, -2.416626)
+scale = Vector2(0.95001316, 0.950013)
+shape = SubResource("RectangleShape2D_15qo1")
+
+[node name="upgrade_orb" parent="." unique_id=508046751 instance=ExtResource("3_3n873")]
+position = Vector2(1460, 747)
+upgrade_name = "Hammer Bounce"
+
+[node name="player" parent="." unique_id=1932963563 instance=ExtResource("2_3n873")]
+position = Vector2(842, 723)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1548323578]
+position = Vector2(1324, 600)
+zoom = Vector2(0.52, 0.52)
