@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var has_hammer_bounce : bool
 @export var has_hammer_launch : bool
 
+
 func _ready() -> void:
 	SignalManager.connect("launch_finished", handle_finished_launch)
 	SignalManager.connect("stop_pulling", handle_stopped_pull)

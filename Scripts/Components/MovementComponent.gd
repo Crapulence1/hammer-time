@@ -22,7 +22,6 @@ var turning_in_air : bool = false
 func tick(delta : float) -> void:
 	if body == null or is_pulling_to_hammer:
 		return
-	print(body.velocity.x)
 	
 	if body.is_on_floor():
 		turning_in_air = false

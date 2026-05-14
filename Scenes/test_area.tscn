@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="1_kpu7f"]
 [ext_resource type="PackedScene" uid="uid://dgsr66k654gt" path="res://Scenes/player.tscn" id="2_3n873"]
 [ext_resource type="PackedScene" uid="uid://fh3xcm0atwrk" path="res://Scenes/upgrade_orb.tscn" id="3_3n873"]
+[ext_resource type="PackedScene" uid="uid://m58b0w22p51v" path="res://Scenes/hammer_reflector.tscn" id="4_15qo1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15qo1"]
 size = Vector2(124.254425, 111.16681)
@@ -32,3 +33,14 @@ position = Vector2(842, 723)
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1548323578]
 position = Vector2(1324, 600)
 zoom = Vector2(0.52, 0.52)
+
+[node name="hammer_reflector" parent="." unique_id=44577460 instance=ExtResource("4_15qo1")]
+position = Vector2(1264, 734)
+
+[node name="hammer_reflector2" parent="." unique_id=940116049 instance=ExtResource("4_15qo1")]
+position = Vector2(1267, 203)
+rotation = -1.5707964
+
+[node name="hammer_reflector3" parent="." unique_id=1697247117 instance=ExtResource("4_15qo1")]
+position = Vector2(842, 194)
+rotation = -3.1415927

@@ -6,6 +6,8 @@ var is_jump_pressed : bool
 var is_swing_pressed : bool
 var is_ground_boost_pressed : bool
 var is_launch_pressed : bool
+var is_throw_pressed : bool
+var throw_dir : Vector2
 
 func _process(delta: float) -> void:
 	direction = Input.get_axis("Left", "Right")
@@ -16,3 +18,7 @@ func _process(delta: float) -> void:
 		is_ground_boost_pressed = true
 	if Input.is_action_just_pressed("Hammer Launch") and UpgradeManager.has_upgrade("Hammer Launch"):
 		is_launch_pressed = true
+	if Input.is_action_just_pressed("Throw"):
+		is_throw_pressed = true
+	
+	throw_dir = Input.get_vector("Left", "Right", "Up", "Down")

@@ -27,9 +27,13 @@ has_hammer_launch = true
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433801604]
 texture = ExtResource("2_fkybt")
 
-[node name="hammer" parent="." unique_id=914817786 instance=ExtResource("2_x3wgy")]
+[node name="hammer" parent="." unique_id=914817786 node_paths=PackedStringArray("input_component", "hammer_spot") instance=ExtResource("2_x3wgy")]
 position = Vector2(76, 0)
+LAUNCH_DIR = Vector2(0.7, -0.7)
+LAUNCH_SPEED = 700
 THROW_DISTANCE = 300.0
+input_component = NodePath("../InputComponent")
+hammer_spot = NodePath("../hammer_spot")
 
 [node name="collision_box" type="CollisionShape2D" parent="." unique_id=563101156]
 position = Vector2(0, 1)

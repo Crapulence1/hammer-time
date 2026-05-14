@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dbvsggched8nr" path="res://Scripts/hammer.gd" id="1_kxv3n"]
 [ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="2_010gp"]
+[ext_resource type="Script" uid="uid://cyipvbih2lc50" path="res://Scripts/Components/ThrowComponent.gd" id="2_l8gpf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_538jt"]
 size = Vector2(99, 94)
@@ -69,13 +70,23 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxv3n"]
 
-[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX")]
+[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX", "throw_component")]
 collision_layer = 4
 script = ExtResource("1_kxv3n")
+DAMAGE = null
 COLLISION_BOX = NodePath("collision_box")
-THROW_DIR = Vector2(0.7, -0.7)
-THROW_SPEED = 800
+LAUNCH_DIR = null
+LAUNCH_SPEED = null
 THROW_DISTANCE = 100.0
+throw_component = NodePath("ThrowComponent")
+
+[node name="ThrowComponent" type="Node" parent="." unique_id=913536067 node_paths=PackedStringArray("body")]
+script = ExtResource("2_l8gpf")
+body = NodePath("..")
+THROW_SPEED = 1200
+THROW_DISTANCE_CUTOFF = 1000
+RETURN_SPEED = 2000
+metadata/_custom_type_script = "uid://cyipvbih2lc50"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1841492331]
 position = Vector2(0, -0.5000019)
