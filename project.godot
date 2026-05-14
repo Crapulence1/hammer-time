@@ -23,7 +23,7 @@ UpgradeManager="*uid://1wptfhlr0gxb"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/cheatsheet_viewer/plugin.cfg")
+enabled=PackedStringArray("res://addons/cheatsheet_viewer/plugin.cfg", "res://addons/synapse/plugin.cfg")
 
 [input]
 
