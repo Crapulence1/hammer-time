@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dbvsggched8nr" path="res://Scripts/hammer.gd" id="1_kxv3n"]
 [ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="2_010gp"]
 [ext_resource type="Script" uid="uid://cyipvbih2lc50" path="res://Scripts/Components/ThrowComponent.gd" id="2_l8gpf"]
+[ext_resource type="Script" uid="uid://h6r8iouiai1p" path="res://Scripts/Components/LaunchComponent.gd" id="3_ry3hk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_538jt"]
 size = Vector2(99, 94)
@@ -70,15 +71,13 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxv3n"]
 
-[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX", "throw_component")]
+[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX", "throw_component", "launch_component")]
 collision_layer = 4
 script = ExtResource("1_kxv3n")
-DAMAGE = null
 COLLISION_BOX = NodePath("collision_box")
-LAUNCH_DIR = null
-LAUNCH_SPEED = null
 THROW_DISTANCE = 100.0
 throw_component = NodePath("ThrowComponent")
+launch_component = NodePath("LaunchComponent")
 
 [node name="ThrowComponent" type="Node" parent="." unique_id=913536067 node_paths=PackedStringArray("body")]
 script = ExtResource("2_l8gpf")
@@ -86,7 +85,17 @@ body = NodePath("..")
 THROW_SPEED = 1200
 THROW_DISTANCE_CUTOFF = 1000
 RETURN_SPEED = 2000
+relfectable = true
 metadata/_custom_type_script = "uid://cyipvbih2lc50"
+
+[node name="LaunchComponent" type="Node" parent="." unique_id=1024551629 node_paths=PackedStringArray("body")]
+script = ExtResource("3_ry3hk")
+LAUNCH_DIR = Vector2(1, -1)
+LAUNCH_SPEED = 1200
+LAUNCH_DISTANCE = 500
+PULL_SPEED = 1000
+body = NodePath("..")
+metadata/_custom_type_script = "uid://h6r8iouiai1p"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1841492331]
 position = Vector2(0, -0.5000019)
@@ -112,4 +121,7 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1752532256]
 shape = SubResource("RectangleShape2D_kxv3n")
 
+[connection signal="pulling" from="LaunchComponent" to="." method="_on_launch_component_pulling"]
+[connection signal="stopped_pulling" from="LaunchComponent" to="." method="_on_launch_component_stopped_pulling"]
+[connection signal="body_entered" from="collision_box" to="." method="_on_collision_box_body_entered"]
 [connection signal="timeout" from="cooldown" to="." method="_on_cooldown_timeout"]

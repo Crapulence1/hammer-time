@@ -15,6 +15,9 @@ size = Vector2(124, 117)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3smsa"]
 size = Vector2(202, 220.75)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8erm5"]
+size = Vector2(128, 20)
+
 [node name="player" type="CharacterBody2D" unique_id=1932963563 node_paths=PackedStringArray("input_component", "movement_component", "hammer")]
 collision_layer = 2
 collision_mask = 9
@@ -27,13 +30,15 @@ has_hammer_launch = true
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433801604]
 texture = ExtResource("2_fkybt")
 
-[node name="hammer" parent="." unique_id=914817786 node_paths=PackedStringArray("input_component", "hammer_spot") instance=ExtResource("2_x3wgy")]
+[node name="hammer" parent="." unique_id=914817786 node_paths=PackedStringArray("input_component", "hammer_spot", "return_area", "player") instance=ExtResource("2_x3wgy")]
 position = Vector2(76, 0)
 LAUNCH_DIR = Vector2(0.7, -0.7)
 LAUNCH_SPEED = 700
 THROW_DISTANCE = 300.0
 input_component = NodePath("../InputComponent")
 hammer_spot = NodePath("../hammer_spot")
+return_area = NodePath("../hammer_return")
+player = NodePath("..")
 
 [node name="collision_box" type="CollisionShape2D" parent="." unique_id=563101156]
 position = Vector2(0, 1)
@@ -71,5 +76,23 @@ shape = SubResource("RectangleShape2D_3smsa")
 [node name="hammer_spot" type="Node2D" parent="." unique_id=368730613]
 position = Vector2(76, 0)
 
+[node name="floor_detect" type="Area2D" parent="." unique_id=1044986346]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor_detect" unique_id=1750877621]
+position = Vector2(0, 60)
+shape = SubResource("RectangleShape2D_8erm5")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2121958009]
+zoom = Vector2(0.525, 0.525)
+drag_horizontal_enabled = true
+drag_left_margin = 0.1
+drag_right_margin = 0.1
+
+[connection signal="hammer_returned" from="." to="hammer" method="_on_player_hammer_returned"]
+[connection signal="touched_ground" from="." to="hammer" method="_on_player_touched_ground"]
+[connection signal="pulling" from="hammer" to="." method="_on_hammer_pulling"]
+[connection signal="stopped_pulling" from="hammer" to="." method="_on_hammer_stopped_pulling"]
+[connection signal="body_entered" from="hammer_return" to="." method="_on_hammer_return_body_entered"]
 [connection signal="body_entered" from="hammer_return" to="hammer" method="_on_hammer_return_body_entered"]
 [connection signal="body_exited" from="hammer_return" to="hammer" method="_on_hammer_return_body_exited"]
+[connection signal="body_entered" from="floor_detect" to="." method="_on_floor_detect_body_entered"]

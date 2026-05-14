@@ -1,6 +1,11 @@
 extends CharacterBody2D
 class_name Hammer
 
+enum STATE {Holding, Throwing, Launching}
+
+signal pulling
+signal stopped_pulling
+
 @export var DAMAGE : int
 @export var COLLISION_BOX : Area2D
 @export var LAUNCH_DIR : Vector2
@@ -8,38 +13,45 @@ class_name Hammer
 @export var THROW_DISTANCE : float
 @export var input_component : InputComponent
 @export var throw_component : ThrowComponent
+@export var launch_component : LaunchComponent
 @export var hammer_spot : Node2D
+@export var return_area : Area2D
+@export var player : CharacterBody2D 
 
 var is_on_cooldown : bool = false
-var is_launching : bool = false
 var initial_pos : Vector2 
 var exited : bool = false #Latch for hammer entrance and exit
-var tween : Tween
+var state
 
-
-
+func _ready() -> void:
+	launch_component.return_area = return_area
+	launch_component.return_node = hammer_spot
+	launch_component.launcher = player
+	state = STATE.Holding
 
 func _physics_process(delta: float) -> void:
-	if throw_component.is_returning:
+	if throw_component.returning:
 		return
-	
-	if input_component.is_throw_pressed:
-		if input_component.throw_dir == Vector2(0,0): #if not direction pressed
-			input_component.throw_dir = Vector2(1, 0) # throw right
-		throw_component.throw_dir = input_component.throw_dir
-		if not throw_component.is_thrown: #prevents throwing while thrown
-			throw_component.throw()
-	
-	if throw_component.is_thrown:
-		if get_slide_collision_count():#if there current collisions
-			throw_component.check_collisions(get_slide_collision(0))
-	
-	input_component.is_throw_pressed = false
-	
-	if is_launching:
-		if calculate_distance(initial_pos) >= THROW_DISTANCE:
-			stop_launch()
+	if state == STATE.Holding:
+		if input_component.is_throw_pressed:
 			
+			if input_component.throw_dir == Vector2(0,0): #if not direction pressed
+				input_component.throw_dir = Vector2(1, 0) # throw right
+				
+			throw_component.throw_dir = input_component.throw_dir
+			
+			if not throw_component.thrown: #prevents throwing while thrown
+				throw_component.throw()
+				state = STATE.Throwing
+				
+		if input_component.is_launch_pressed:
+			launch_component.launch()
+			state = STATE.Launching
+		
+		input_component.is_launch_pressed = false
+		input_component.is_throw_pressed = false
+	
+	
 	move_and_slide()
 
 func swing() -> void:
@@ -51,37 +63,34 @@ func swing() -> void:
 func _on_cooldown_timeout() -> void:
 	is_on_cooldown = false
 
-func launch(delta : float) -> void:
-	enable_top_level()
-	is_launching = true
-	velocity = LAUNCH_SPEED * LAUNCH_DIR
-	
-func stop_launch() -> void:
-	velocity = Vector2.ZERO
-	SignalManager.emit_signal("launch_finished", global_position)
-	is_launching = false
-
-func calculate_distance(initial_pos : Vector2) -> float:
-	return (global_position - initial_pos).length()
-
-func enable_top_level() -> void:
-	initial_pos = global_position#saves current position
-	top_level = true #makes position go whack | Makes node independent of parent node position wise
-	global_position = initial_pos #puts it back in its position
-	
-
-func _on_hammer_return_body_entered(body: Node2D) -> void: #Resets hammer position
-	if body == self and exited:
-		return_hammer()
-		
-func return_hammer() -> void:
-	position = hammer_spot.position
-	exited = false
-	SignalManager.emit_signal("stop_pulling")
-	top_level = false
-	throw_component.is_returning = false
-	throw_component.is_thrown = false
-	pass
-
 func _on_hammer_return_body_exited(body: Node2D) -> void:
 	exited = true
+
+func _on_launch_component_pulling() -> void:
+	emit_signal("pulling")
+
+func _on_launch_component_stopped_pulling() -> void:
+	emit_signal("stopped_pulling")
+
+func _on_player_hammer_returned() -> void:
+	if state == STATE.Throwing:
+		throw_component.returning = false
+		throw_component.thrown = false
+		throw_component.throwable = true
+		state = STATE.Holding
+		top_level = false
+		global_position = hammer_spot.global_position
+		
+
+	if state == STATE.Launching:
+		launch_component.stop_pulling()
+		state = STATE.Holding
+
+func _on_player_touched_ground() -> void:
+	launch_component.has_launch = true
+
+
+func _on_collision_box_body_entered(body: Node2D) -> void:
+	print(1)
+	if body is Reflector and throw_component.relfectable:
+		throw_component.reflect(body)

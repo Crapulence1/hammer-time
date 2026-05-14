@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
+signal hammer_returned
+signal touched_ground
+
 @export var input_component : InputComponent
 @export var movement_component : MovementComponent
 @export var hammer : CharacterBody2D
 @export var has_hammer_bounce : bool
 @export var has_hammer_launch : bool
-
+@export var floor_detect : Area2D
 
 func _ready() -> void:
-	SignalManager.connect("launch_finished", handle_finished_launch)
-	SignalManager.connect("stop_pulling", handle_stopped_pull)
-	
 	#Dev Tools
 	if has_hammer_bounce:
 		UpgradeManager.add_upgrade("Hammer Bounce")
@@ -24,13 +24,8 @@ func _physics_process(delta: float) -> void:
 	
 	#Hammer Bounce
 	if UpgradeManager.has_upgrade("Hammer Bounce"):
-		movement_component.wants_ground_boost = input_component.is_ground_boost_pressed
-		input_component.is_ground_boost_pressed = false
-	
-	#Hammer Launch
-	if input_component.is_launch_pressed and UpgradeManager.has_upgrade("Hammer Launch"):
-		hammer.launch(delta)
-		input_component.is_launch_pressed = false
+		movement_component.wants_hammer_bounch = input_component.is_hammer_bounce_pressed
+		input_component.is_hamer_bounce_pressed = false
 	
 	#Movement logic
 	movement_component.dir = input_component.direction
@@ -42,8 +37,16 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	
-func handle_finished_launch(hammer_pos) -> void: #Begins pulling to hammer
-	movement_component.pull_to_hammer(hammer_pos)
-	
-func handle_stopped_pull() -> void: #Re-enables normal physics
-	movement_component.is_pulling_to_hammer = false
+func _on_hammer_return_body_entered(body: Node2D) -> void:
+	if body is Hammer:
+		emit_signal("hammer_returned")
+
+func _on_hammer_pulling() -> void:
+	movement_component.disable_physics = true
+
+func _on_hammer_stopped_pulling() -> void:
+	movement_component.disable_physics = false
+
+func _on_floor_detect_body_entered(body: Node2D) -> void:
+	if body is StaticBody2D:
+		emit_signal("touched_ground")

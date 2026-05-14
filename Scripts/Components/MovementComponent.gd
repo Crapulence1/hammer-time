@@ -9,6 +9,7 @@ class_name MovementComponent
 @export var AIR_MOVEMENT_SLOWDOWN_DELTA : float
 @export var GROUND_FRICTION : float
 @export var HAMMER_PULL_SPEED_MULTIPLIER : int
+@export var AFFECTED_BY_GRAVITY : bool
 
 var dir : int
 var wants_jump : bool
@@ -18,9 +19,10 @@ var current_air_movement_damp : float
 var is_pulling_to_hammer : bool = false
 var current_gravity : float = BASE_GRAVITY
 var turning_in_air : bool = false
+var disable_physics : bool = false
 
 func tick(delta : float) -> void:
-	if body == null or is_pulling_to_hammer:
+	if body == null or disable_physics:
 		return
 	
 	if body.is_on_floor():
