@@ -8,7 +8,6 @@ var available_upgrades : Array[Dictionary] = [
 	{"Name": "Hammer Launch", "Description": "Throw your hammer forward and up, then launch to it."}
 	]
 	
-	
 func find_upgrade(upgrade_name : String) -> Dictionary:
 	var upgrade : Dictionary
 	for i in available_upgrades:

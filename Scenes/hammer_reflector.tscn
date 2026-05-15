@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://vi8b3v36e267" path="res://Scripts/hammer_reflector.gd" id="1_g8ii6"]
 
-[node name="hammer_reflector" type="StaticBody2D" unique_id=44577460]
+[node name="hammer_reflector" type="Area2D" unique_id=1446779728]
 script = ExtResource("1_g8ii6")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=787618623]

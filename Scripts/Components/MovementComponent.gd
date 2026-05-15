@@ -14,7 +14,7 @@ class_name MovementComponent
 var dir : int
 var wants_jump : bool
 var has_double_jump : bool = true
-var wants_ground_boost : bool
+var wants_hammer_bounce : bool
 var current_air_movement_damp : float
 var is_pulling_to_hammer : bool = false
 var current_gravity : float = BASE_GRAVITY
@@ -30,7 +30,7 @@ func tick(delta : float) -> void:
 		has_double_jump = true
 		
 		#TODO handle animation
-		if wants_ground_boost:
+		if wants_hammer_bounce:
 			body.velocity.y = 2 * -JUMP_FORCE
 		
 		body.velocity.x = SPEED * dir
@@ -54,7 +54,7 @@ func tick(delta : float) -> void:
 			has_double_jump = false;
 	
 	wants_jump = false
-	wants_ground_boost = false
+	wants_hammer_bounce = false
 
 func pull_to_hammer(hammer_pos : Vector2) -> void:
 	is_pulling_to_hammer = true #temporarily stops normal physics to pull to hammer

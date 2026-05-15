@@ -25,6 +25,7 @@ script = ExtResource("1_vgqql")
 input_component = NodePath("InputComponent")
 movement_component = NodePath("MovementComponent")
 hammer = NodePath("hammer")
+has_hammer_bounce = true
 has_hammer_launch = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433801604]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="1_kpu7f"]
 [ext_resource type="PackedScene" uid="uid://dgsr66k654gt" path="res://Scenes/player.tscn" id="2_3n873"]
-[ext_resource type="PackedScene" uid="uid://m58b0w22p51v" path="res://Scenes/hammer_reflector.tscn" id="4_15qo1"]
+[ext_resource type="PackedScene" uid="uid://fh3xcm0atwrk" path="res://Scenes/upgrade_orb.tscn" id="3_3n873"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15qo1"]
 size = Vector2(124.254425, 111.16681)
@@ -22,16 +22,34 @@ position = Vector2(-0.055030823, -2.416626)
 scale = Vector2(0.95001316, 0.950013)
 shape = SubResource("RectangleShape2D_15qo1")
 
+[node name="platform2" type="StaticBody2D" parent="." unique_id=308289493]
+position = Vector2(1668, -75.99999)
+scale = Vector2(1.164, 3.458)
+
+[node name="Sprite2D" type="Sprite2D" parent="platform2" unique_id=1816427230]
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("1_kpu7f")
+
+[node name="platform" type="CollisionShape2D" parent="platform2" unique_id=1989278854]
+position = Vector2(-0.055030823, -2.416626)
+scale = Vector2(0.95001316, 0.950013)
+shape = SubResource("RectangleShape2D_15qo1")
+
+[node name="platform3" type="StaticBody2D" parent="." unique_id=2054340560]
+position = Vector2(1671.9999, 584)
+scale = Vector2(1.164, 3.458)
+
+[node name="Sprite2D" type="Sprite2D" parent="platform3" unique_id=20266371]
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("1_kpu7f")
+
+[node name="platform" type="CollisionShape2D" parent="platform3" unique_id=294290397]
+position = Vector2(-0.055030823, -2.416626)
+scale = Vector2(0.95001316, 0.950013)
+shape = SubResource("RectangleShape2D_15qo1")
+
 [node name="player" parent="." unique_id=1932963563 instance=ExtResource("2_3n873")]
 position = Vector2(842, 723)
 
-[node name="hammer_reflector2" parent="." unique_id=940116049 instance=ExtResource("4_15qo1")]
-position = Vector2(1267, 203)
-rotation = -1.5707964
-
-[node name="hammer_reflector4" parent="." unique_id=44577460 instance=ExtResource("4_15qo1")]
-position = Vector2(1267, 739)
-
-[node name="hammer_reflector3" parent="." unique_id=1697247117 instance=ExtResource("4_15qo1")]
-position = Vector2(842, 194)
-rotation = -3.1415927
+[node name="upgrade_orb" parent="." unique_id=508046751 instance=ExtResource("3_3n873")]
+position = Vector2(1169, 726)

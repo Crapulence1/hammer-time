@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Area2D
 class_name Reflector
 
 @onready var reflect_dir : Vector2 = $RayCast2D.target_position

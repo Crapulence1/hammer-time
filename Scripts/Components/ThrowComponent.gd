@@ -5,7 +5,7 @@ class_name ThrowComponent
 @export var THROW_SPEED : int
 @export var THROW_DISTANCE_CUTOFF : int
 @export var RETURN_SPEED : int
-@export var relfectable : bool
+@export var reflectable : bool
 
 var throw_dir : Vector2
 var thrown : bool
@@ -43,5 +43,5 @@ func reflect(reflector : Reflector) -> void:
 	var reflect_dir : Vector2 = (raycast.to_global(raycast.target_position) - raycast.to_global(Vector2.ZERO)).normalized() #raycast global direction code i copiedd
 	throwable = false
 	body.velocity = reflect_dir * THROW_SPEED
-	print(1)
+	
 	

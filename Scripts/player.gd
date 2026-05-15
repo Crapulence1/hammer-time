@@ -24,8 +24,9 @@ func _physics_process(delta: float) -> void:
 	
 	#Hammer Bounce
 	if UpgradeManager.has_upgrade("Hammer Bounce"):
-		movement_component.wants_hammer_bounch = input_component.is_hammer_bounce_pressed
-		input_component.is_hamer_bounce_pressed = false
+		movement_component.wants_hammer_bounce = input_component.is_hammer_bounce_pressed
+		input_component.is_hammer_bounce_pressed = false
+		has_hammer_bounce = false
 	
 	#Movement logic
 	movement_component.dir = input_component.direction

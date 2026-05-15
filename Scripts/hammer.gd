@@ -50,8 +50,8 @@ func _physics_process(delta: float) -> void:
 		
 		input_component.is_launch_pressed = false
 		input_component.is_throw_pressed = false
-	
-	
+	if get_last_slide_collision():
+		_on_player_hammer_returned()
 	move_and_slide()
 
 func swing() -> void:
@@ -74,6 +74,7 @@ func _on_launch_component_stopped_pulling() -> void:
 
 func _on_player_hammer_returned() -> void:
 	if state == STATE.Throwing:
+		velocity = Vector2.ZERO
 		throw_component.returning = false
 		throw_component.thrown = false
 		throw_component.throwable = true
@@ -89,8 +90,7 @@ func _on_player_hammer_returned() -> void:
 func _on_player_touched_ground() -> void:
 	launch_component.has_launch = true
 
-
-func _on_collision_box_body_entered(body: Node2D) -> void:
-	print(1)
-	if body is Reflector and throw_component.relfectable:
-		throw_component.reflect(body)
+func _on_reflect_detector_area_entered(area: Area2D) -> void:
+	if area is Reflector and throw_component.thrown:
+		throw_component.reflect(area)
+	pass # Replace with function body.
