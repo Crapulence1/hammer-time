@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://beixirl5v2ho" path="res://Scripts/Components/MovementComponent.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://ccb2gnq34myxh" path="res://Scripts/Components/InputComponent.gd" id="1_v0iea"]
 [ext_resource type="Script" uid="uid://bulcbrnmg7u3l" path="res://Scripts/player.gd" id="1_vgqql"]
-[ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="2_fkybt"]
 [ext_resource type="PackedScene" uid="uid://xix3t6skxbag" path="res://Scenes/hammer.tscn" id="2_x3wgy"]
+[ext_resource type="Script" uid="uid://pup43t3dca6g" path="res://Scripts/Components/AnimationComponent.gd" id="3_3smsa"]
+[ext_resource type="Texture2D" uid="uid://guw66op6gsav" path="res://Sprites/Spring_Player_Idle.ase1.png" id="5_x3wgy"]
+[ext_resource type="Texture2D" uid="uid://b024oqrpoxx01" path="res://Sprites/Spring_Player_Walk.png" id="6_x3wgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
 size = Vector2(124, 117)
@@ -18,7 +20,130 @@ size = Vector2(202, 220.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8erm5"]
 size = Vector2(128, 20)
 
-[node name="player" type="CharacterBody2D" unique_id=1932963563 node_paths=PackedStringArray("input_component", "movement_component", "hammer")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3smsa"]
+atlas = ExtResource("6_x3wgy")
+region = Rect2(0, 0, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8erm5"]
+atlas = ExtResource("6_x3wgy")
+region = Rect2(24, 0, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ek2"]
+atlas = ExtResource("6_x3wgy")
+region = Rect2(48, 0, 24, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tx1dd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_x3wgy")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3smsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8erm5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1ek2")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 8.0
+}]
+
+[sub_resource type="Animation" id="Animation_x3wgy"]
+resource_name = "Idle"
+length = 0.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3smsa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8erm5"]
+resource_name = "Walk"
+length = 0.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0, 0, 0),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f1ek2"]
+_data = {
+&"Idle": SubResource("Animation_x3wgy"),
+&"RESET": SubResource("Animation_3smsa"),
+&"Walk": SubResource("Animation_8erm5")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tx1dd"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gymyn"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pu2lt"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x3wgy"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3smsa"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ukyrk"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tx1dd")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_gymyn")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_pu2lt")
+blend_point_2/pos = Vector2(0, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_x3wgy")
+blend_point_3/pos = Vector2(0, 1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_3smsa")
+blend_point_4/pos = Vector2(0, -0.90000004)
+blend_mode = 1
+
+[node name="player" type="CharacterBody2D" unique_id=1932963563 node_paths=PackedStringArray("input_component", "movement_component", "hammer", "floor_detect", "animated_sprite")]
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_vgqql")
@@ -27,9 +152,8 @@ movement_component = NodePath("MovementComponent")
 hammer = NodePath("hammer")
 has_hammer_bounce = true
 has_hammer_launch = true
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433801604]
-texture = ExtResource("2_fkybt")
+floor_detect = NodePath("floor_detect")
+animated_sprite = NodePath("AnimatedSprite2D")
 
 [node name="hammer" parent="." unique_id=914817786 node_paths=PackedStringArray("input_component", "hammer_spot", "return_area", "player") instance=ExtResource("2_x3wgy")]
 position = Vector2(76, 0)
@@ -44,6 +168,13 @@ player = NodePath("..")
 [node name="collision_box" type="CollisionShape2D" parent="." unique_id=563101156]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_x3wgy")
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=1810989121 node_paths=PackedStringArray("body", "animation_tree")]
+script = ExtResource("3_3smsa")
+property = "velocity"
+body = NodePath("..")
+animation_tree = NodePath("../Sprite2D/AnimationTree")
+metadata/_custom_type_script = "uid://pup43t3dca6g"
 
 [node name="InputComponent" type="Node" parent="." unique_id=189209458]
 script = ExtResource("1_v0iea")
@@ -84,10 +215,30 @@ position = Vector2(0, 60)
 shape = SubResource("RectangleShape2D_8erm5")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2121958009]
-zoom = Vector2(0.525, 0.525)
+zoom = Vector2(0.57, 0.57)
 drag_horizontal_enabled = true
 drag_left_margin = 0.1
 drag_right_margin = 0.1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1274458114]
+visible = false
+scale = Vector2(3.65, 3.65)
+sprite_frames = SubResource("SpriteFrames_tx1dd")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=736705975]
+scale = Vector2(3.645, 3.645)
+texture = ExtResource("6_x3wgy")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=669342705]
+libraries/ = SubResource("AnimationLibrary_f1ek2")
+
+[node name="AnimationTree" type="AnimationTree" parent="Sprite2D" unique_id=270907403]
+tree_root = SubResource("AnimationNodeBlendSpace2D_ukyrk")
+anim_player = NodePath("../AnimationPlayer")
+parameters/blend_position = Vector2(-0.006715536, 0.029629707)
 
 [connection signal="hammer_returned" from="." to="hammer" method="_on_player_hammer_returned"]
 [connection signal="touched_ground" from="." to="hammer" method="_on_player_touched_ground"]

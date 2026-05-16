@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[aseprite_importers]
+
+aseprite_executable_path="C:/Users/andre/Documents/Godot projects/libsprite/libresprite.exe"
+
 [autoload]
 
 Global="*uid://b50y43h47p2ui"

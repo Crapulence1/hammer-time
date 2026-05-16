@@ -9,6 +9,7 @@ signal touched_ground
 @export var has_hammer_bounce : bool
 @export var has_hammer_launch : bool
 @export var floor_detect : Area2D
+@export var animated_sprite : AnimatedSprite2D
 
 func _ready() -> void:
 	#Dev Tools
@@ -36,11 +37,19 @@ func _physics_process(delta: float) -> void:
 	if input_component.is_swing_pressed and hammer and not hammer.is_on_cooldown:
 		hammer.swing()
 	
+	if input_component.direction == 0:
+		animated_sprite.play("Idle")
+	else:
+		animated_sprite.play("Walk")
+	
+	
+	
 	move_and_slide()
 	
 func _on_hammer_return_body_entered(body: Node2D) -> void:
 	if body is Hammer:
 		emit_signal("hammer_returned")
+		hammer.state = hammer.STATE.Holding
 
 func _on_hammer_pulling() -> void:
 	movement_component.disable_physics = true
