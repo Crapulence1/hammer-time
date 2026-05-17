@@ -6,7 +6,7 @@ class_name MovementComponent
 @export var TOP_SPEED : int
 @export var JUMP_FORCE : int = 100
 @export var BASE_GRAVITY : int = 3
-@export var AIR_MOVEMENT_SLOWDOWN_DELTA : float
+@export var AIR_CONTROL : float
 @export var GROUND_FRICTION : float
 @export var HAMMER_PULL_SPEED_MULTIPLIER : int
 @export var AFFECTED_BY_GRAVITY : bool
@@ -40,7 +40,7 @@ func tick(delta : float) -> void:
 		if (dir != sign(body.velocity.x) and dir != 0): #if holding opposite direction of movement while in air
 			turning_in_air = true #turns on latch
 		if turning_in_air:
-			body.velocity.x = move_toward(body.velocity.x, dir * TOP_SPEED, AIR_MOVEMENT_SLOWDOWN_DELTA) #allows for mid air turning
+			body.velocity.x = move_toward(body.velocity.x, dir * TOP_SPEED, AIR_CONTROL) #allows for mid air turning
 		
 		#Gravity
 		body.velocity += body.get_gravity() * current_gravity * delta

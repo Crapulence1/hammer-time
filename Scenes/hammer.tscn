@@ -13,13 +13,14 @@ size = Vector2(99, 94)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nvmri"]
 size = Vector2(24, 24)
 
-[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX", "throw_component", "launch_component")]
+[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX", "throw_component", "launch_component", "collision_shape")]
 collision_layer = 4
 script = ExtResource("1_kxv3n")
 COLLISION_BOX = NodePath("collision_box")
 THROW_DISTANCE = 100.0
 throw_component = NodePath("ThrowComponent")
 launch_component = NodePath("LaunchComponent")
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="ThrowComponent" type="Node" parent="." unique_id=913536067 node_paths=PackedStringArray("body")]
 script = ExtResource("2_l8gpf")

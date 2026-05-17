@@ -9,7 +9,7 @@ signal touched_ground
 @export var has_hammer_bounce : bool
 @export var has_hammer_launch : bool
 @export var floor_detect : Area2D
-@export var animated_sprite : AnimatedSprite2D
+@export var has_hammer : bool
 
 func _ready() -> void:
 	#Dev Tools
@@ -19,12 +19,13 @@ func _ready() -> void:
 		UpgradeManager.add_upgrade("Hammer Launch")
 
 func _physics_process(delta: float) -> void:
+	
 	#latch bc physics_process and normal process are out of sync
 	movement_component.wants_jump = input_component.is_jump_pressed
 	input_component.is_jump_pressed = false
 	
 	#Hammer Bounce
-	if UpgradeManager.has_upgrade("Hammer Bounce"):
+	if UpgradeManager.has_upgrade("Hammer Bounce") and has_hammer:
 		movement_component.wants_hammer_bounce = input_component.is_hammer_bounce_pressed
 		input_component.is_hammer_bounce_pressed = false
 		has_hammer_bounce = false
@@ -34,15 +35,8 @@ func _physics_process(delta: float) -> void:
 	movement_component.tick(delta)
 	
 	#Hammer swing
-	if input_component.is_swing_pressed and hammer and not hammer.is_on_cooldown:
+	if input_component.is_swing_pressed and hammer and not hammer.is_on_cooldown and has_hammer:
 		hammer.swing()
-	
-	if input_component.direction == 0:
-		animated_sprite.play("Idle")
-	else:
-		animated_sprite.play("Walk")
-	
-	
 	
 	move_and_slide()
 	
