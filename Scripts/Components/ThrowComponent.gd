@@ -1,47 +1,21 @@
 extends Node
 class_name ThrowComponent
 
-@export var body : Hammer
+signal projectile_thrown
+
+@export var projectile : CharacterBody2D
 @export var THROW_SPEED : int
-@export var THROW_DISTANCE_CUTOFF : int
-@export var RETURN_SPEED : int
-@export var reflectable : bool
+@export var THROW_DISTANCE : int
 
-var throw_dir : Vector2
-var thrown : bool
-var throwable : bool = true
-var returning : bool = false
-var dead : bool = false
-var alive : bool = true
+var return_spot : Node2D
 
-func _process(delta: float) -> void:
-	if dead:
-		kill()
-	if thrown:
-		if Global.calculate_distance(body.initial_pos, body) >= THROW_DISTANCE_CUTOFF:
-			stop_throw()
-			
-	if returning:
-		body.global_position = body.global_position.move_toward(body.hammer_spot.global_position, RETURN_SPEED * delta)
-
-func kill():
-	alive = false
-
-func throw() -> void:
-	thrown = true
-	Global.enable_top_level(body)
-	body.initial_pos = body.global_position
-	body.velocity = THROW_SPEED * throw_dir
+func throw(throw_dir : int) -> void:
+	Global.enable_top_level(projectile)
+	projectile.velocity.x = THROW_SPEED * throw_dir
+	emit_signal("projectile_thrown")
 	
-func stop_throw() -> void:
-	body.velocity = Vector2.ZERO
-	returning = true
-	
-func reflect(reflector : Reflector) -> void:
-	var raycast : RayCast2D = reflector.raycast
-	body.global_position = reflector.global_position
-	var reflect_dir : Vector2 = (raycast.to_global(raycast.target_position) - raycast.to_global(Vector2.ZERO)).normalized() #raycast global direction code i copiedd
-	throwable = false
-	body.velocity = reflect_dir * THROW_SPEED
+func return_projectile(delta : float) -> void:
+	projectile.velocity = Vector2.ZERO
+	projectile.global_position = projectile.global_position.move_toward(return_spot.global_position, THROW_SPEED * delta)
 	
 	

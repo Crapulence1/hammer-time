@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://dgsr66k654gt"]
+
+[ext_resource type="Texture2D" uid="uid://b024oqrpoxx01" path="res://Sprites/Spring_Player_Walk.png" id="6_x3wgy"]
+
+[sub_resource type="GDScript" id="GDScript_v0iea"]
+script/source = "extends CharacterBody2D
+
+signal hammer_returned
+signal touched_ground
+
+@export var input_component : InputComponent
+@export var movement_component : MovementComponent
+@export var hammer : CharacterBody2D
+@export var has_hammer_bounce : bool
+@export var has_hammer_launch : bool
+@export var floor_detect : Area2D
+@export var has_hammer : bool
+
+func _ready() -> void:
+	#Dev Tools
+	if has_hammer_bounce:
+		UpgradeManager.add_upgrade(\"Hammer Bounce\")
+	if has_hammer_launch:
+		UpgradeManager.add_upgrade(\"Hammer Launch\")
+
+func _physics_process(delta: float) -> void:
+	
+	#latch bc physics_process and normal process are out of sync
+	movement_component.wants_jump = input_component.is_jump_pressed
+	input_component.is_jump_pressed = false
+	
+	#Hammer Bounce
+	if UpgradeManager.has_upgrade(\"Hammer Bounce\") and has_hammer:
+		movement_component.wants_hammer_bounce = input_component.is_hammer_bounce_pressed
+		input_component.is_hammer_bounce_pressed = false
+		has_hammer_bounce = false
+	
+	#Movement logic
+	movement_component.dir = input_component.direction
+	movement_component.tick(delta)
+	
+	#Hammer swing
+	if input_component.is_swing_pressed and hammer and not hammer.is_on_cooldown and has_hammer:
+		hammer.swing()
+	
+	move_and_slide()
+	
+func _on_hammer_return_body_entered(body: Node2D) -> void:
+	if body is Hammer:
+		emit_signal(\"hammer_returned\")
+		hammer.state = hammer.STATE.Holding
+
+func _on_hammer_pulling() -> void:
+	movement_component.disable_physics = true
+
+func _on_hammer_stopped_pulling() -> void:
+	movement_component.disable_physics = false
+
+func _on_floor_detect_body_entered(body: Node2D) -> void:
+	if body is StaticBody2D:
+		emit_signal(\"touched_ground\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+size = Vector2(80, 113)
+
+[node name="player" type="CharacterBody2D" unique_id=1932963563 node_paths=PackedStringArray("input_component", "movement_component", "hammer", "floor_detect")]
+collision_layer = 2
+collision_mask = 9
+script = SubResource("GDScript_v0iea")
+input_component = NodePath("")
+movement_component = NodePath("")
+hammer = NodePath("")
+has_hammer_bounce = true
+has_hammer_launch = true
+floor_detect = NodePath("")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1042822627]
+scale = Vector2(3.605, 3.605)
+texture = ExtResource("6_x3wgy")
+flip_h = true
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=927895047]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_cvnsp")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=449300536]
+drag_horizontal_enabled = true

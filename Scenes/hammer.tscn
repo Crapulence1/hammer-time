@@ -1,72 +1,34 @@
 [gd_scene format=3 uid="uid://xix3t6skxbag"]
 
-[ext_resource type="Script" uid="uid://dbvsggched8nr" path="res://Scripts/hammer.gd" id="1_kxv3n"]
+[ext_resource type="Script" uid="uid://dbigvatmibwxi" path="res://Scripts/hammer.gd" id="1_kxv3n"]
 [ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="2_010gp"]
 [ext_resource type="Script" uid="uid://cyipvbih2lc50" path="res://Scripts/Components/ThrowComponent.gd" id="2_l8gpf"]
-[ext_resource type="Script" uid="uid://h6r8iouiai1p" path="res://Scripts/Components/LaunchComponent.gd" id="3_ry3hk"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_538jt"]
-size = Vector2(99, 94)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kxv3n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nvmri"]
-size = Vector2(24, 24)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8gpf"]
 
-[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("COLLISION_BOX", "throw_component", "launch_component", "collision_shape")]
+[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("throw_component")]
 collision_layer = 4
 script = ExtResource("1_kxv3n")
-COLLISION_BOX = NodePath("collision_box")
-THROW_DISTANCE = 100.0
 throw_component = NodePath("ThrowComponent")
-launch_component = NodePath("LaunchComponent")
-collision_shape = NodePath("CollisionShape2D")
 
-[node name="ThrowComponent" type="Node" parent="." unique_id=913536067 node_paths=PackedStringArray("body")]
-script = ExtResource("2_l8gpf")
-body = NodePath("..")
-THROW_SPEED = 1200
-THROW_DISTANCE_CUTOFF = 1000
-RETURN_SPEED = 2000
-reflectable = true
-metadata/_custom_type_script = "uid://cyipvbih2lc50"
-
-[node name="LaunchComponent" type="Node" parent="." unique_id=1024551629 node_paths=PackedStringArray("body")]
-script = ExtResource("3_ry3hk")
-LAUNCH_DIR = Vector2(1, -1)
-LAUNCH_SPEED = 1200
-LAUNCH_DISTANCE = 500
-PULL_SPEED = 1000
-body = NodePath("..")
-metadata/_custom_type_script = "uid://h6r8iouiai1p"
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1841492331]
-position = Vector2(0, -0.5000019)
-rotation = -1.5707964
-scale = Vector2(0.14062499, 0.14843749)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2063312394]
+position = Vector2(-1.1920929e-07, -5.9604645e-07)
+scale = Vector2(0.15625, 0.15625)
 texture = ExtResource("2_010gp")
-
-[node name="collision_box" type="Area2D" parent="." unique_id=11766995]
-visible = false
-collision_layer = 4
-collision_mask = 9
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="collision_box" unique_id=310325043]
-shape = SubResource("RectangleShape2D_538jt")
-
-[node name="cooldown" type="Timer" parent="." unique_id=1458438365]
-one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1752532256]
 shape = SubResource("RectangleShape2D_kxv3n")
 
-[node name="reflect_detector" type="Area2D" parent="." unique_id=1904180671]
+[node name="ThrowComponent" type="Node" parent="." unique_id=1753084213 node_paths=PackedStringArray("projectile")]
+script = ExtResource("2_l8gpf")
+projectile = NodePath("..")
+THROW_SPEED = 500
+THROW_DISTANCE = 800
+metadata/_custom_type_script = "uid://cyipvbih2lc50"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="reflect_detector" unique_id=1733568962]
-shape = SubResource("RectangleShape2D_nvmri")
+[node name="collision_box" type="Area2D" parent="." unique_id=604316894]
 
-[connection signal="pulling" from="LaunchComponent" to="." method="_on_launch_component_pulling"]
-[connection signal="stopped_pulling" from="LaunchComponent" to="." method="_on_launch_component_stopped_pulling"]
-[connection signal="timeout" from="cooldown" to="." method="_on_cooldown_timeout"]
-[connection signal="area_entered" from="reflect_detector" to="." method="_on_reflect_detector_area_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collision_box" unique_id=180251534]
+shape = SubResource("RectangleShape2D_l8gpf")
