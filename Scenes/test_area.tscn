@@ -3,11 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://dnn15wm15mqjv" path="res://icon.svg" id="1_kpu7f"]
 [ext_resource type="PackedScene" uid="uid://dgsr66k654gt" path="res://Scenes/player.tscn" id="2_3n873"]
 [ext_resource type="PackedScene" uid="uid://fh3xcm0atwrk" path="res://Scenes/upgrade_orb.tscn" id="3_3n873"]
+[ext_resource type="PackedScene" uid="uid://darvurm5j01f0" path="res://Scenes/wall_bounce.tscn" id="4_15qo1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15qo1"]
 size = Vector2(124.254425, 111.16681)
 
 [node name="testArea" type="Node2D" unique_id=1830321723]
+position = Vector2(207, -25)
 
 [node name="platform" type="StaticBody2D" parent="." unique_id=172327272]
 position = Vector2(1305, 854)
@@ -40,3 +42,7 @@ position = Vector2(842, 723)
 
 [node name="upgrade_orb" parent="." unique_id=508046751 instance=ExtResource("3_3n873")]
 position = Vector2(1169, 726)
+
+[node name="wall_bounce" parent="." unique_id=1227097195 instance=ExtResource("4_15qo1")]
+position = Vector2(1546, 598)
+BOUNCE_VECTOR = Vector2(-0.5, -2)

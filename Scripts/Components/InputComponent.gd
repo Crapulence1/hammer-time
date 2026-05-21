@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	is_swing_pressed = Input.is_action_pressed("Interact")
 	if Input.is_action_just_pressed("Hammer Bounce") and UpgradeManager.has_upgrade("Hammer Bounce"):
 		is_hammer_bounce_pressed = true
-	if Input.is_action_just_pressed("Hammer Launch") and UpgradeManager.has_upgrade("Hammer Launch"):
+	if Input.is_action_just_pressed("Hammer Launch"):
 		is_launch_pressed = true
 	if Input.is_action_just_pressed("Throw"):
 		is_throw_pressed = true

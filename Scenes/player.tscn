@@ -25,10 +25,12 @@ scale = Vector2(3.605, 3.605)
 texture = ExtResource("6_x3wgy")
 hframes = 3
 
-[node name="hammer" parent="." unique_id=914817786 node_paths=PackedStringArray("input_component", "hammer_return_spot") instance=ExtResource("2_x3wgy")]
+[node name="hammer" parent="." unique_id=914817786 node_paths=PackedStringArray("input_component", "movement_component", "hammer_return_spot", "body") instance=ExtResource("2_x3wgy")]
 position = Vector2(50, 0)
 input_component = NodePath("../InputComponent")
+movement_component = NodePath("../MovementComponent")
 hammer_return_spot = NodePath("../hammer_return_spot")
+body = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=927895047]
 position = Vector2(0, 1.5)
@@ -44,8 +46,8 @@ metadata/_custom_type_script = "uid://ccb2gnq34myxh"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1389720200 node_paths=PackedStringArray("body")]
 script = ExtResource("1_cvnsp")
-SPEED = 500
-AIR_SPEED = 500
+SPEED = 900
+AIR_SPEED = 200
 JUMP_FORCE = 500
 GRAVITY = 2
 body = NodePath("..")
