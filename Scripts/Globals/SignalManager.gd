@@ -1,8 +1,6 @@
 extends Node
 
 #Hammer/Hitbox
-signal swing
+signal bounced
 
-signal launch_finished
-
-signal stop_pulling
+signal swing(hammer_hitbox : Hammer, player : Player)

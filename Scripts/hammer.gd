@@ -7,7 +7,7 @@ class_name Hammer
 @export var movement_component : MovementComponent
 @export var swing_component : SwingComponent
 @export var hammer_return_spot : Node2D
-@export var body : CharacterBody2D
+@export var player : Player
 @export var anim : AnimationPlayer
 
 signal bounced
@@ -15,11 +15,11 @@ signal bounced
 var throw_dir : int
 
 func _ready() -> void:
-	launch_component.body = body
+	Global.hammer = self
+	launch_component.body = player
 	connect("bounced", bounce)
 
 func _physics_process(delta: float) -> void:
-	
 	#Setting component variables
 	launch_component.return_spot = hammer_return_spot
 	launch_component.movement_component = movement_component
@@ -27,17 +27,24 @@ func _physics_process(delta: float) -> void:
 	
 	#Throw
 	if input_component.is_throw_pressed and not throw_component.thrown:
+		set_collision_mask_value(1, true)
 		input_component.is_throw_pressed = false
 		throw_component.throw(throw_dir)
 	
 	#Launch
 	if input_component.is_launch_pressed and not launch_component.launched:
+		set_collision_mask_value(1, true)
 		input_component.is_launch_pressed = false
 		launch_component.launch()
 	
 	#Swing
+	swing_component.player = player
 	if input_component.is_swing_pressed and not anim.is_playing():
 		swing_component.swing()
+		
+	if is_on_wall():
+		launch_component.stop_launch()
+		set_collision_mask_value(1, false)
 	
 	move_and_slide()
 
@@ -51,6 +58,7 @@ func return_to_player() -> void:
 	velocity = Vector2.ZERO
 	top_level = false
 	global_position = hammer_return_spot.global_position
+	set_collision_mask_value(1, false)
 	
 func bounce(BOUNCE_VECTOR : Vector2, BOUNCE_SPEED : int) -> void:
-	body.velocity = BOUNCE_VECTOR * BOUNCE_SPEED
+	player.velocity = BOUNCE_VECTOR * BOUNCE_SPEED

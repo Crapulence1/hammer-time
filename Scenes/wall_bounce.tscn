@@ -9,9 +9,12 @@ size = Vector2(247, 247)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ugb7d"]
 size = Vector2(81, 240)
 
-[node name="wall_bounce" type="StaticBody2D" unique_id=1227097195]
+[node name="wall_bounce" type="StaticBody2D" unique_id=1227097195 node_paths=PackedStringArray("RAYCAST", "hitbox")]
 script = ExtResource("1_ssa0c")
-BOUNCE_SPEED = 500
+RAYCAST = NodePath("RayCast2D")
+BOUNCE_SPEED = 1000
+new_air_speed = 20
+hitbox = NodePath("hitbox")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2104123530]
 rotation = 3.1415927
@@ -27,4 +30,5 @@ shape = SubResource("RectangleShape2D_loxio")
 position = Vector2(-123, -2)
 shape = SubResource("RectangleShape2D_ugb7d")
 
-[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=437181620]
+target_position = Vector2(-200, -200)

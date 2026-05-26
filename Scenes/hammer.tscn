@@ -8,82 +8,11 @@
 
 [sub_resource type="Animation" id="Animation_nvmri"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../swing_hitbox:monitoring")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../swing_hitbox:monitorable")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../swing_hitbox:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_ry3hk"]
 resource_name = "Swing"
+length = 0.2
 step = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../swing_hitbox:monitoring")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../swing_hitbox:monitorable")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../swing_hitbox:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3vd2r"]
 _data = {
@@ -128,14 +57,15 @@ metadata/_custom_type_script = "uid://cyipvbih2lc50"
 script = ExtResource("4_nvmri")
 projectile = NodePath("..")
 LAUNCH_VECTOR = Vector2(1, -1)
-LAUNCH_SPEED = 600
+LAUNCH_SPEED = 2000
 LAUNCH_DISTANCE = 700
 PULL_SPEED = 1200
 metadata/_custom_type_script = "uid://h6r8iouiai1p"
 
-[node name="SwingComponent" type="Node" parent="." unique_id=1598768060 node_paths=PackedStringArray("anim")]
+[node name="SwingComponent" type="Node" parent="." unique_id=1598768060 node_paths=PackedStringArray("anim", "hammer")]
 script = ExtResource("5_ry3hk")
 anim = NodePath("../Sprite2D/AnimationPlayer")
+hammer = NodePath("..")
 metadata/_custom_type_script = "uid://septijxcp532"
 
 [node name="collision_box" type="Area2D" parent="." unique_id=604316894]
@@ -144,9 +74,6 @@ metadata/_custom_type_script = "uid://septijxcp532"
 shape = SubResource("RectangleShape2D_l8gpf")
 
 [node name="swing_hitbox" type="Area2D" parent="." unique_id=822626926]
-visible = false
-monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="swing_hitbox" unique_id=1218421657]
 position = Vector2(56.5, 0.5)
