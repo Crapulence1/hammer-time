@@ -20,9 +20,10 @@ texture = ExtResource("2_smycg")
 shape = SubResource("RectangleShape2D_iju5o")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=689539894]
+position = Vector2(0, -24)
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=519309826]
-position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_edukx")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
