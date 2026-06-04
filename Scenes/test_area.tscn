@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dgsr66k654gt" path="res://Scenes/player.tscn" id="2_3n873"]
 [ext_resource type="PackedScene" uid="uid://fh3xcm0atwrk" path="res://Scenes/upgrade_orb.tscn" id="3_3n873"]
 [ext_resource type="PackedScene" uid="uid://darvurm5j01f0" path="res://Scenes/wall_bounce.tscn" id="4_15qo1"]
+[ext_resource type="PackedScene" uid="uid://bx760wlt8boax" path="res://Scenes/button.tscn" id="5_bc04g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15qo1"]
 size = Vector2(124.254425, 111.16681)
@@ -43,8 +44,12 @@ position = Vector2(655, 718)
 position = Vector2(1169, 726)
 
 [node name="wall_bounce" parent="." unique_id=1227097195 instance=ExtResource("4_15qo1")]
-position = Vector2(1411, 578)
+position = Vector2(1436, 107)
 
 [node name="wall_bounce2" parent="." unique_id=1799693114 instance=ExtResource("4_15qo1")]
-position = Vector2(846, 499)
+position = Vector2(796, 171)
 scale = Vector2(-1, 1)
+
+[node name="button" parent="." unique_id=1814917011 instance=ExtResource("5_bc04g")]
+position = Vector2(1546, 708)
+rotation = 4.712389

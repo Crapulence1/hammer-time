@@ -42,18 +42,28 @@ func _physics_process(delta: float) -> void:
 	if input_component.is_swing_pressed and not anim.is_playing():
 		swing_component.swing()
 		
+	#Hammer collides with wall
 	if is_on_wall():
-		launch_component.stop_launch()
+		
+		if launch_component.launched:
+			launch_component.stop_launch()
+			
+		if throw_component.thrown:
+			throw_component.return_projectile(delta)
+			
 		set_collision_mask_value(1, false)
+	
 	
 	move_and_slide()
 
 
 func _on_hammer_return_area_area_entered(area: Area2D) -> void:
-	if launch_component.pulling:
-		launch_component.stop_pull()
-	return_to_player()
+	if area.get_parent() is Hammer:
+		if launch_component.pulling:
+			launch_component.stop_pull()
+		return_to_player()
 
+#Returns hammer to specified spot
 func return_to_player() -> void:
 	velocity = Vector2.ZERO
 	top_level = false
