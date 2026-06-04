@@ -18,12 +18,16 @@ func _process(delta: float) -> void:
 		if Global.calculate_distance(return_spot.global_position, projectile) >= LAUNCH_DISTANCE:
 			stop_launch()
 	
-
 func launch() -> void:
 	Global.enable_top_level(projectile)
 	movement_component.DISABLE_PHYSICS = true #Stops body's movement
 	body.velocity = Vector2.ZERO
-	projectile.velocity = LAUNCH_SPEED * LAUNCH_VECTOR
+	
+	if body is Player:
+		projectile.velocity = Vector2(LAUNCH_SPEED * LAUNCH_VECTOR.x * body.facing_dir, LAUNCH_SPEED * LAUNCH_VECTOR.y)
+		projectile.scale.x *= body.facing_dir
+	else:
+		projectile.velocity = LAUNCH_SPEED * LAUNCH_VECTOR
 	launched = true
 	
 	
@@ -34,7 +38,7 @@ func stop_launch() -> void:
 func pull() -> void:
 	launched = false
 	pulling = true
-	body.velocity = PULL_SPEED * LAUNCH_VECTOR
+	body.velocity = PULL_SPEED * (projectile.global_position - body.global_position).normalized()
 	
 func stop_pull() -> void:
 	pulling = false

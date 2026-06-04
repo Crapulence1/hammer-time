@@ -59,7 +59,7 @@ projectile = NodePath("..")
 LAUNCH_VECTOR = Vector2(1, -1)
 LAUNCH_SPEED = 2000
 LAUNCH_DISTANCE = 700
-PULL_SPEED = 1200
+PULL_SPEED = 1500
 metadata/_custom_type_script = "uid://h6r8iouiai1p"
 
 [node name="SwingComponent" type="Node" parent="." unique_id=1598768060 node_paths=PackedStringArray("anim", "hammer")]
