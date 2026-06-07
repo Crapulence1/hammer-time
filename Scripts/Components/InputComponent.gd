@@ -7,6 +7,8 @@ var is_swing_pressed : bool
 var is_hammer_bounce_pressed : bool
 var is_launch_pressed : bool
 var is_throw_pressed : bool
+var is_slowfall_pressed : bool
+var is_ground_pound_pressed : bool
 var throw_dir : Vector2
 
 func _process(delta: float) -> void:
@@ -20,5 +22,7 @@ func _process(delta: float) -> void:
 		is_launch_pressed = true
 	if Input.is_action_just_pressed("Throw"):
 		is_throw_pressed = true
+	is_slowfall_pressed = Input.is_action_pressed("Slowfall")
+	is_ground_pound_pressed = Input.is_action_pressed("Ground Pound")
 	
 	throw_dir = Input.get_vector("Left", "Right", "Up", "Down")

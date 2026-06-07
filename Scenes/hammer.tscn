@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://cyipvbih2lc50" path="res://Scripts/Components/ThrowComponent.gd" id="2_l8gpf"]
 [ext_resource type="Script" uid="uid://h6r8iouiai1p" path="res://Scripts/Components/LaunchComponent.gd" id="4_nvmri"]
 [ext_resource type="Script" uid="uid://septijxcp532" path="res://Scripts/Components/SwingComponent.gd" id="5_ry3hk"]
+[ext_resource type="Script" uid="uid://benl1vcbegsq5" path="res://Scripts/Components/SlowfallComponent.gd" id="6_3vd2r"]
+[ext_resource type="Script" uid="uid://cferh13f1yb2f" path="res://Scripts/Components/GroundPoundComponent.gd" id="7_edooq"]
 
 [sub_resource type="Animation" id="Animation_nvmri"]
 length = 0.001
@@ -27,12 +29,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_edooq"]
 size = Vector2(97, 201)
 
-[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("throw_component", "launch_component", "swing_component", "anim")]
+[node name="hammer" type="CharacterBody2D" unique_id=914817786 node_paths=PackedStringArray("throw_component", "launch_component", "swing_component", "slowfall_component", "ground_pound_component", "anim")]
 collision_layer = 4
 script = ExtResource("1_kxv3n")
 throw_component = NodePath("ThrowComponent")
 launch_component = NodePath("LaunchComponent")
 swing_component = NodePath("SwingComponent")
+slowfall_component = NodePath("SlowfallComponent")
+ground_pound_component = NodePath("GroundPoundComponent")
 anim = NodePath("Sprite2D/AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2063312394]
@@ -67,6 +71,16 @@ script = ExtResource("5_ry3hk")
 anim = NodePath("../Sprite2D/AnimationPlayer")
 hammer = NodePath("..")
 metadata/_custom_type_script = "uid://septijxcp532"
+
+[node name="SlowfallComponent" type="Node" parent="." unique_id=2045892998]
+script = ExtResource("6_3vd2r")
+NEW_GRAVITY = 1
+metadata/_custom_type_script = "uid://benl1vcbegsq5"
+
+[node name="GroundPoundComponent" type="Node" parent="." unique_id=118775707]
+script = ExtResource("7_edooq")
+DOWN_SPEED = 5
+metadata/_custom_type_script = "uid://cferh13f1yb2f"
 
 [node name="collision_box" type="Area2D" parent="." unique_id=604316894]
 

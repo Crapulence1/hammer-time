@@ -6,20 +6,27 @@ class_name Hammer
 @export var input_component : InputComponent
 @export var movement_component : MovementComponent
 @export var swing_component : SwingComponent
+@export var slowfall_component : SlowfallComponent 
+@export var ground_pound_component : GroundPoundComponent
 @export var hammer_return_spot : Node2D
 @export var player : Player
 @export var anim : AnimationPlayer
 
 signal bounced
-
+signal hammer_loaded
 var throw_dir : int
+
 
 func _ready() -> void:
 	Global.hammer = self
 	launch_component.body = player
+	slowfall_component.body = player
+	ground_pound_component.body = player
 	connect("bounced", bounce)
+	emit_signal("hammer_loaded")
 
 func _physics_process(delta: float) -> void:
+	
 	#Setting component variables
 	launch_component.return_spot = hammer_return_spot
 	launch_component.movement_component = movement_component
@@ -42,6 +49,19 @@ func _physics_process(delta: float) -> void:
 	if input_component.is_swing_pressed and not anim.is_playing():
 		swing_component.swing()
 		
+	#Slowfall
+	if input_component.is_slowfall_pressed:
+		slowfall_component.start_slowfall()
+	else:
+		slowfall_component.stop_slowfall()
+		
+	#Ground Pound
+	if input_component.is_ground_pound_pressed:
+		ground_pound_component.start_ground_pound()
+	else:
+		ground_pound_component.stop_ground_pound()
+		
+	
 	#Hammer collides with wall
 	if is_on_wall():
 		
@@ -50,12 +70,12 @@ func _physics_process(delta: float) -> void:
 			
 		if throw_component.thrown:
 			throw_component.return_projectile(delta)
+			throw_component.returning = true
 			
+		#Disables hammer collision w/ ground
 		set_collision_mask_value(1, false)
 	
-	
 	move_and_slide()
-
 
 func _on_hammer_return_area_area_entered(area: Area2D) -> void:
 	if area.get_parent() is Hammer:

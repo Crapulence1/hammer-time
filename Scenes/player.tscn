@@ -114,8 +114,9 @@ script = ExtResource("1_cvnsp")
 TOP_SPEED = 900
 ACCELERATION = 400
 AIR_SPEED = 200
-JUMP_FORCE = 500
+JUMP_FORCE = 1250
 GRAVITY = 2
+MAX_FALL_SPEED = 1000
 body = NodePath("..")
 metadata/_custom_type_script = "uid://beixirl5v2ho"
 
