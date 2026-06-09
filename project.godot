@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="hammerTime"
+run/main_scene="uid://bcuakqbtclm1b"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,9 +21,7 @@ aseprite_executable_path="C:/Users/andre/Documents/Godot projects/libsprite/libr
 
 [autoload]
 
-Global="*uid://b50y43h47p2ui"
-SignalManager="*uid://frp7xr60kf6q"
-UpgradeManager="*uid://1wptfhlr0gxb"
+Global="*uid://c15lbkknopj3i"
 
 [editor_plugins]
 

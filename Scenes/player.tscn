@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://caoylm8imrhpe"]
+
+[ext_resource type="Script" uid="uid://ccb2gnq34myxh" path="res://Scripts/Components/InputComponent.gd" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://bv8c0ygdxt3hh" path="res://Scripts/player.gd" id="1_vgqql"]
+[ext_resource type="Texture2D" uid="uid://guw66op6gsav" path="res://Sprites/Spring_Player_Idle.ase1.png" id="2_cvnsp"]
+[ext_resource type="Script" uid="uid://beixirl5v2ho" path="res://Scripts/Components/MovementComponent.gd" id="3_6t5aa"]
+[ext_resource type="Script" uid="uid://c4nsdup1vqx4b" path="res://Scripts/Components/HammerComponent.gd" id="5_x3wgy"]
+[ext_resource type="PackedScene" uid="uid://xix3t6skxbag" path="res://Scenes/hammer.tscn" id="6_3smsa"]
+[ext_resource type="Script" uid="uid://dbigvatmibwxi" path="res://Scripts/hammer.gd" id="7_3smsa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
+size = Vector2(57, 101)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3smsa"]
+size = Vector2(35, 106)
+
+[node name="Player" type="CharacterBody2D" unique_id=32020261 node_paths=PackedStringArray("input_component", "movement_component", "hammer_component")]
+script = ExtResource("1_vgqql")
+input_component = NodePath("InputComponent")
+movement_component = NodePath("MovementComponent")
+hammer_component = NodePath("HammerComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=318038159]
+scale = Vector2(3, 3)
+texture = ExtResource("2_cvnsp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=269017392]
+shape = SubResource("RectangleShape2D_6t5aa")
+
+[node name="InputComponent" type="Node" parent="." unique_id=953504157]
+script = ExtResource("1_v0iea")
+metadata/_custom_type_script = "uid://ccb2gnq34myxh"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1604109058 node_paths=PackedStringArray("body")]
+script = ExtResource("3_6t5aa")
+TOP_SPEED = 1000
+ACCELERATION = 500
+AIR_SPEED = 1200
+GROUND_FRICTION = 0.5
+JUMP_FORCE = 800
+GRAVITY = 2.0
+MAX_FALL_SPEED = 1500
+body = NodePath("..")
+metadata/_custom_type_script = "uid://beixirl5v2ho"
+
+[node name="HammerComponent" type="Node" parent="." unique_id=414037123 node_paths=PackedStringArray("player", "movement_component", "hammer", "hammer_spot")]
+script = ExtResource("5_x3wgy")
+player = NodePath("..")
+movement_component = NodePath("../MovementComponent")
+hammer = NodePath("../hammer")
+hammer_spot = NodePath("../hammer_spot")
+THROW_SPEED = 1000
+THROW_DISTANCE = 750
+LAUNCH_SPEED = 1500
+PULL_SPEED = 2000
+SLOW_FALL_GRAVITY = 1.0
+GROUND_POUND_GRAVITY = 5.0
+metadata/_custom_type_script = "uid://c4nsdup1vqx4b"
+
+[node name="hammer_spot" type="Marker2D" parent="." unique_id=1526221579]
+position = Vector2(48, 0)
+
+[node name="hammer" parent="." unique_id=172201742 instance=ExtResource("6_3smsa")]
+position = Vector2(48, 0)
+script = ExtResource("7_3smsa")
+
+[node name="hammer_catch" type="Area2D" parent="." unique_id=559717419]
+position = Vector2(48, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hammer_catch" unique_id=414398943]
+position = Vector2(-3.5, 0)
+shape = SubResource("RectangleShape2D_3smsa")
+
+[connection signal="body_entered" from="hammer_catch" to="." method="_on_hammer_catch_body_entered"]

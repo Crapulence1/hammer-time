@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://n733ooqgrpme"]
+
+[node name="menu" type="Node2D" unique_id=1053215896]
+
+[node name="Button" type="Button" parent="." unique_id=504744358]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label" type="Label" parent="Button" unique_id=2004188419]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button2" type="Button" parent="." unique_id=362518569]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label" type="Label" parent="Button2" unique_id=1796120670]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
