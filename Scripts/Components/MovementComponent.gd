@@ -18,14 +18,12 @@ var dir : int
 var wants_jump : bool
 var has_double_jump : bool = true
 var turning_in_air : bool = false
-var touching_ground : bool = true #touching ground latch so signal is only emitted once
 
 var current_air_speed : int
 var current_gravity : float
 
 func _ready() -> void:
 	current_gravity = GRAVITY
-	pass
 	#SignalManager.connect("bounced",set_air_speed)
 
 ##Controls all player movement logic.
@@ -36,11 +34,8 @@ func tick(delta : float) -> void:
 	if DISABLE_INPUTS: #keeps gravity going but prevents any other type of movements
 		gravity(delta)
 		return
+	
 	if body.is_on_floor():
-		
-		if not touching_ground:
-			emit_signal("player_touched_ground")
-			touching_ground = true
 		
 		#Jump
 		if wants_jump:
@@ -56,9 +51,6 @@ func tick(delta : float) -> void:
 		has_double_jump = true
 		
 	if not body.is_on_floor():
-		
-		if touching_ground:
-			touching_ground = false
 		
 		#Gravity
 		gravity(delta)

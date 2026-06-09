@@ -52,9 +52,11 @@ hammer_spot = NodePath("../hammer_spot")
 THROW_SPEED = 1000
 THROW_DISTANCE = 750
 LAUNCH_SPEED = 1500
+LAUNCH_DIR = Vector2(1, -1)
+LAUNCH_DISTANCE = 500
 PULL_SPEED = 2000
-SLOW_FALL_GRAVITY = 1.0
-GROUND_POUND_GRAVITY = 5.0
+SLOW_FALL_GRAVITY = 0.5
+GROUND_POUND_SPEED = 1000.0
 metadata/_custom_type_script = "uid://c4nsdup1vqx4b"
 
 [node name="hammer_spot" type="Marker2D" parent="." unique_id=1526221579]
